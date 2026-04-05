@@ -89,7 +89,7 @@ export default function DashboardPage() {
     const [{ data: prof }, { data: logs }, { data: plan }] = await Promise.all([
       supabase.from('profiles').select('*').eq('id', user.id).single(),
       supabase.from('food_logs').select('*').eq('user_id', user.id).gte('logged_at', today).order('logged_at', { ascending: false }),
-      supabase.from('daily_plans').select('*').eq('user_id', user.id).eq('plan_date', today).single(),
+      supabase.from('daily_plans').select('*').eq('user_id', user.id).eq('plan_date', today).maybeSingle(),
     ]);
 
     if (prof) setProfile(prof);
