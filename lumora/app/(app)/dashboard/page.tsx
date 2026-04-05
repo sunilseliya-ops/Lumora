@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/lib/supabase';
-import { getGreeting, formatDate, getMealEmoji, calorieColor } from '@/lib/utils';
+import { getGreeting, calorieColor } from '@/lib/utils';
 import { Sparkles, LogOut, Dumbbell, CheckSquare, Edit3, Check } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -191,7 +191,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Quote card */}
-        <div className="glass" style={{ borderRadius: 20, padding: '18px 20px', animation: 'slideUp 0.4s ease-out 0.05s forwards', opacity: 0, borderLeft: '3px solid rgba(232,160,32,0.5)' }}>
+        <div className="glass" style={{ borderRadius: 20, padding: '18px 20px', animation: 'slideUp 0.4s ease-out forwards', borderLeft: '3px solid rgba(232,160,32,0.5)' }}>
           <p style={{ fontSize: 13, color: '#EFF2F7', lineHeight: 1.6, fontStyle: 'italic' }}>
             &ldquo;{quote.text}&rdquo;
           </p>
@@ -199,7 +199,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Streak + Calories row */}
-        <div className="glass" style={{ borderRadius: 24, padding: '20px', animation: 'slideUp 0.4s ease-out 0.1s forwards', opacity: 0 }}>
+        <div className="glass" style={{ borderRadius: 24, padding: '20px', animation: 'slideUp 0.4s ease-out forwards' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             {/* Plant */}
             <PlantStreak streak={profile?.streak || 0} />
@@ -216,7 +216,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Workout + Task cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, animation: 'slideUp 0.4s ease-out 0.15s forwards', opacity: 0 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, animation: 'slideUp 0.4s ease-out forwards' }}>
           {/* Workout */}
           <div className="glass" style={{ borderRadius: 20, padding: '16px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
@@ -279,7 +279,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Mood */}
-        <div className="glass" style={{ borderRadius: 24, padding: '20px', animation: 'slideUp 0.4s ease-out 0.2s forwards', opacity: 0 }}>
+        <div className="glass" style={{ borderRadius: 24, padding: '20px', animation: 'slideUp 0.4s ease-out forwards' }}>
           <div style={{ fontSize: 12, color: '#8892A4', marginBottom: 14, letterSpacing: '0.06em' }}>HOW ARE YOU FEELING?</div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {MOODS.map(m => (
@@ -292,7 +292,7 @@ export default function DashboardPage() {
         </div>
 
         {/* LUMI Insight */}
-        <div className="glass" style={{ borderRadius: 24, padding: '20px', animation: 'slideUp 0.4s ease-out 0.25s forwards', opacity: 0 }}>
+        <div className="glass" style={{ borderRadius: 24, padding: '20px', animation: 'slideUp 0.4s ease-out forwards' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 12, color: '#8892A4', letterSpacing: '0.06em' }}>
               <Sparkles size={13} color="#7C6AEA" />
@@ -314,7 +314,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick links */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, animation: 'slideUp 0.4s ease-out 0.3s forwards', opacity: 0 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, animation: 'slideUp 0.4s ease-out forwards' }}>
           {[
             { href: '/therapist', label: 'Talk to LUMI', emoji: '🧠', color: '#7C6AEA' },
             { href: '/journal', label: 'Write Journal', emoji: '📔', color: '#E8A020' },
