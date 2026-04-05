@@ -29,7 +29,7 @@ List every visible food item. Be accurate with Indian food. If not food: {"error
         'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'llama-3.2-11b-vision-preview',
+        model: 'meta-llama/llama-4-scout-17b-16e-instruct',
         messages: [{
           role: 'user',
           content: [
