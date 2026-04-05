@@ -81,25 +81,34 @@ export default function DashboardPage() {
   const quote = getDailyQuote();
 
   const load = useCallback(async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const today = new Date().toISOString().split('T')[0];
 
-    const today = new Date().toISOString().split('T')[0];
+      // Load profile
+      try {
+        const { data: prof } = await supabase.from('profiles').select('*').eq('id', user.id).single();
+        if (prof) setProfile(prof);
+      } catch {}
 
-    const [{ data: prof }, { data: logs }, { data: plan }] = await Promise.all([
-      supabase.from('profiles').select('*').eq('id', user.id).single(),
-      supabase.from('food_logs').select('*').eq('user_id', user.id).gte('logged_at', today).order('logged_at', { ascending: false }),
-      supabase.from('daily_plans').select('*').eq('user_id', user.id).eq('plan_date', today).maybeSingle(),
-    ]);
+      // Load food logs
+      try {
+        const { data: logs } = await supabase.from('food_logs').select('*').eq('user_id', user.id).gte('logged_at', today).order('logged_at', { ascending: false });
+        if (logs) { setTodayLogs(logs); setTodayCals(logs.reduce((s: number, l: any) => s + (l.calories || 0), 0)); }
+      } catch {}
 
-    if (prof) setProfile(prof);
-    if (logs) { setTodayLogs(logs); setTodayCals(logs.reduce((s: number, l: any) => s + (l.calories || 0), 0)); }
-    if (plan) {
-      setWorkout(plan.workout || '');
-      setTask(plan.important_task || '');
-      setWorkoutDone(plan.workout_done || false);
-      setTaskDone(plan.task_done || false);
-    }
+      // Load daily plan (safe - table may not exist)
+      try {
+        const { data: plan } = await supabase.from('daily_plans').select('*').eq('user_id', user.id).eq('plan_date', today).maybeSingle();
+        if (plan) {
+          setWorkout(plan.workout || '');
+          setTask(plan.important_task || '');
+          setWorkoutDone(plan.workout_done || false);
+          setTaskDone(plan.task_done || false);
+        }
+      } catch {}
+    } catch {}
   }, [supabase]);
 
   useEffect(() => { load(); }, [load]);
